@@ -1,11 +1,11 @@
-var gulp 				= require("gulp");
-var sass 				= require("gulp-sass");
+var gulp 			= require("gulp");
+var sass 			= require("gulp-sass");
 var htmlmin 		= require("gulp-htmlmin");
 var notify 			= require("gulp-notify");
 var concat 			= require("gulp-concat");
 var uglify 			= require("gulp-uglify");
-var browserSync = require("browser-sync").create();
-var del 				= require("del");
+var browserSync 	= require("browser-sync").create();
+var del 			= require("del");
 
 /* Tasks cached */
 gulp.task("cache:css", function() {
@@ -41,6 +41,11 @@ gulp.task("js", ['cache:js'], function() {
 				.pipe(browserSync.stream());
 });
 
+ gulp.task("move-fonts", function() { 
+ 	return gulp.src('./src/components/components-font-awesome/fonts/**') 
+ 		  .pipe(gulp.dest('./dist/fonts'))
+  });
+
 /* Task concat js */
 gulp.task("concat-js", function() {
 	return gulp.src([
@@ -68,7 +73,7 @@ gulp.task("server", function() {
 	gulp.watch("./src/index.html", ['html']);
 });
 
-gulp.task("default", ["sass", "html", "js", "concat-js", "server"]);
+gulp.task("default", ["sass", "html", "js", "concat-js", "move-fonts", "server"]);
 
 
 
